@@ -1,12 +1,8 @@
 const FriendInvitation = require("../../models/friendInvitation");
 const User = require("../../models/user");
 const friendsUpdates = require("../../socketHandlers/updates/friends");
-const mongoose = require("mongoose");
 
 const postAccept = async (req, res) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
-
   try {
     const { id } = req.body;
 
@@ -19,8 +15,8 @@ const postAccept = async (req, res) => {
     const { senderId, receiverId } = invitation;
 
     // Check if they are already friends
-    const senderUser = await User.findById(senderId).session(session);
-    const receiverUser = await User.findById(receiverId).session(session);
+    const senderUser = await User.findById(senderId);
+    const receiverUser = await User.findById(receiverId);
 
     if (senderUser.friends.includes(receiverId) || receiverUser.friends.includes(senderId)) {
       return res.status(400).send("You are already friends.");
@@ -34,11 +30,7 @@ const postAccept = async (req, res) => {
     await receiverUser.save();
 
     // Delete the invitation
-    await FriendInvitation.findByIdAndDelete(id).session(session);
-
-    // Commit the transaction
-    await session.commitTransaction();
-    session.endSession();
+    await FriendInvitation.findByIdAndDelete(id);
 
     // Update friends list for both sender and receiver
     friendsUpdates.updateFriends(senderId.toString());
@@ -49,8 +41,6 @@ const postAccept = async (req, res) => {
 
     return res.status(200).send("Friend successfully added.");
   } catch (err) {
-    await session.abortTransaction();
-    session.endSession();
     console.log(err);
     return res.status(500).send("Something went wrong. Please try again.");
   }

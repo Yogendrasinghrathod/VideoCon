@@ -1,8 +1,9 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/user");
 
 const config = process.env;
 
-const verifyTokenSocket = (socket, next) => {
+const verifyTokenSocket = async (socket, next) => {
   const token = socket.handshake.auth?.token;
 
   // If no token is provided, return an error
@@ -15,7 +16,22 @@ const verifyTokenSocket = (socket, next) => {
   try {
     // Verify the token using the secret key
     const decoded = jwt.verify(token, config.TOKEN_KEY);
-    socket.user = decoded;  // Attach the decoded user data to the socket
+    
+    // Fetch user details from database to get username
+    const user = await User.findById(decoded.userId);
+    
+    if (!user) {
+      const socketError = new Error("User not found");
+      socketError.code = "USER_NOT_FOUND";
+      return next(socketError);
+    }
+    
+    // Attach user data to socket
+    socket.user = {
+      userId: decoded.userId,
+      mail: decoded.mail,
+      username: user.username
+    };
   } catch (err) {
     // If token is invalid or expired, return a custom error
     const socketError = new Error("Invalid or expired token");

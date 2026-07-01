@@ -16,6 +16,19 @@ export const createNewRoom = () => {
     webRTCHandler.getLocalStreamPreview(audioOnly, successCallbackFunc);
 };
 
+export const createNewRoomWithTarget = (targetUserId) => {
+    const successCallbackFunc = () => {
+        store.dispatch(setOpenRoom(true, true));
+
+        const audioOnly = store.getState().room.audioOnly;
+        store.dispatch(setIsUserJoinedWithOnlyAudio(audioOnly));
+
+        socketConnection.createNewRoomWithTarget(targetUserId);
+    };
+    const audioOnly = store.getState().room.audioOnly;
+    webRTCHandler.getLocalStreamPreview(audioOnly, successCallbackFunc);
+};
+
 export const newRoomCreated = (data) => {
     const { roomDetails } = data;
     store.dispatch(setRoomDetails(roomDetails));

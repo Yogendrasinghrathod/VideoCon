@@ -4,6 +4,7 @@ const disconnectHandler = require("./socketHandlers/disconnectHandler");
 const directMessageHandler = require("./socketHandlers/directMessageHandler");
 const directChatHistoryHandler = require("./socketHandlers/directChatHistoryHandler");
 const roomCreateHandler = require("./socketHandlers/roomCreateHandler");
+const { roomCreateWithTargetHandler } = require("./socketHandlers/roomCreateHandler");
 const roomJoinHandler = require("./socketHandlers/roomJoinHandler");
 const roomLeaveHandler = require("./socketHandlers/roomLeaveHandler");
 const roomInitializeConnectionHandler = require("./socketHandlers/roomInitializeConnectionHandler");
@@ -107,6 +108,10 @@ const registerSocketServer = (server) => {
 
       // Notify the creator with the room ID
       socket.emit("room-created", { roomId });
+    });
+
+    socket.on("room-create-with-target", (data = {}) => {
+      roomCreateWithTargetHandler(socket, data);
     });
 
     socket.on("room-join", (data = {}) => {

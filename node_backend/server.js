@@ -8,8 +8,8 @@ const socketServer = require("./socketServer");
 const authRoutes = require("./routes/authRoutes");
 const friendInvitationRoutes = require("./routes/friendInvitationRoutes");
 
-const PORT = process.env.PORT || 5000; // Set default port if not defined
-const MONGO_URI = process.env.MONGO_URI; // Ensure the MONGO_URI is defined in the .env file
+const PORT = process.env.PORT || 5000;
+const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/video-conference-app";
 
 const app = express();
 app.use(express.json());

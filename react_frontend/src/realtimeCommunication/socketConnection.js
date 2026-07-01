@@ -4,6 +4,7 @@ import {
   setFriends,
   setOnlineUsers,
 } from "../store/actions/friendsActions";
+import { setIncomingCall } from "../store/roomSlice";
 import store from "../store/store";
 import { updateDirectChatHistoryIfActive } from "../shared/utils/chat";
 import * as roomHandler from "./roomHandler";
@@ -14,8 +15,9 @@ let socket = null;
 
 export const connectWithSocketServer = (userDetails) => {
   const jwtToken = userDetails.token;
+  const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || "http://localhost:5000";
 
-  socket = io("http://localhost:5002", {
+  socket = io(SOCKET_URL, {
     auth: {
       token: jwtToken,
     },
@@ -92,6 +94,16 @@ export const connectWithSocketServer = (userDetails) => {
     window.location.href = "/login";
   });
 
+  socket.on("incoming-call", (data) => {
+    const { callerId, callerUsername, roomId } = data;
+    // Store incoming call details
+    store.dispatch(setIncomingCall({
+      callerId,
+      callerUsername,
+      roomId,
+    }));
+  });
+
   return socket;
 };
 
@@ -106,6 +118,10 @@ export const getDirectChatHistory = (data) => {
 
 export const createNewRoom = () => {
   socket.emit("room-create");
+};
+
+export const createNewRoomWithTarget = (targetUserId) => {
+  socket.emit("room-create-with-target", { targetUserId });
 };
 
 export const joinRoom = (data) => {

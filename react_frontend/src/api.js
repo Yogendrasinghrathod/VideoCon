@@ -1,9 +1,11 @@
 import axios from "axios";
 import { logout } from "./shared/utils/auth";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 const apiClient = axios.create({
-  baseURL: "http://localhost:5002/api/",
-  timeout: 500,
+  baseURL: `${API_URL}/api/`,
+  timeout: 5000,
 });
 
 apiClient.interceptors.request.use(

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../store/actions/authActions";
 import { connectWithSocketServer } from "../realtimeCommunication/socketConnection";
 import Room from "./Room/Room";
+import IncomingCallNotification from "./IncomingCallNotification/IncomingCallNotification";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 // Create a custom theme
@@ -139,6 +140,7 @@ const Dashboard = () => {
             </RoomOverlay>
           )}
         </MainContent>
+        <IncomingCallNotification />
       </DashboardWrapper>
     </ThemeProvider>
   );

@@ -8,6 +8,7 @@ const initialState = {
   remoteStreams: [],
   screenSharingStream: null,
   isUserSharingScreen: false,
+  incomingCall: null,
 };
 
 const roomSlice = createSlice({
@@ -31,6 +32,12 @@ const roomSlice = createSlice({
     setIsUserRoomCreator: (state, action) => {
       state.isUserRoomCreator = action.payload;
     },
+    setIncomingCall: (state, action) => {
+      state.incomingCall = action.payload;
+    },
+    clearIncomingCall: (state) => {
+      state.incomingCall = null;
+    },
     resetRoomState: () => initialState,
   },
 });
@@ -41,6 +48,8 @@ export const {
   setRemoteStreams,
   setScreenSharingStream,
   setIsUserRoomCreator,
+  setIncomingCall,
+  clearIncomingCall,
   resetRoomState,
 } = roomSlice.actions;
 
