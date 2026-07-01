@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { 
   IconButton, 
   Tooltip, 
@@ -44,11 +44,11 @@ const RecordingButton = () => {
   const recordingStartDateRef = useRef(null);
   const timerRef = useRef(null);
 
-  const handleVisibilityChange = () => {
+  const handleVisibilityChange = useCallback(() => {
     if (document.visibilityState === 'hidden' && isRecording) {
       stopRecording();
     }
-  };
+  }, [isRecording]);
 
   useEffect(() => {
     document.addEventListener("visibilitychange", handleVisibilityChange);

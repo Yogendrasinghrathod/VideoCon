@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import CustomPrimaryButton from "../../shared/components/CustomPrimaryButton";
 import RedirectInfo from "../../shared/components/RedirectInfo";
-import { Tooltip, Typography, Box, CircularProgress } from "@mui/material";
+import { Tooltip, Box, CircularProgress } from "@mui/material";
 
 const getFormNotValidMessage = () => {
   return "Username should contain between 3 and 12 characters, and password should contain between 6 and 12 characters. Also, a correct email address should be provided.";

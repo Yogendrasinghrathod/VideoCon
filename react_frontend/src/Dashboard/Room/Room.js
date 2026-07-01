@@ -12,7 +12,6 @@ import RoomButtons from "./RoomButtons/RoomButtons";
 import { useTheme } from "@mui/material/styles";
 import { Box, Slide, Typography, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { connectWithSocketServer } from "../../realtimeCommunication/socketConnection";
 
 const MainContainer = styled('div')(({ theme }) => ({
   position: 'fixed',

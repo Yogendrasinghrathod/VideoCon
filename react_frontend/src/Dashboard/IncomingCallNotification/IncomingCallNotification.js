@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Box, Typography, Button, Avatar, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import { Typography, Button, Avatar, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import { clearIncomingCall } from "../../store/roomSlice";
 import * as roomHandler from "../../realtimeCommunication/roomHandler";
 

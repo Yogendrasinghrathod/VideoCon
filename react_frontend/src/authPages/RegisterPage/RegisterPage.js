@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Paper, Box, Button } from "@mui/material";
+import { Typography, Paper, Box } from "@mui/material";
 import AuthBox from "../../shared/components/AuthBox";
 import RegisterPageInputs from "./RegisterPageInputs";
 import RegisterPageFooter from "./RegisterPageFooter";
@@ -7,7 +7,6 @@ import { validateRegisterForm } from "../../shared/utils/validators";
 import { useDispatch } from "react-redux";
 import { getActions } from "../../store/actions/authActions";
 import { useNavigate } from "react-router-dom";
-import { register } from "../../shared/utils/auth";
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
