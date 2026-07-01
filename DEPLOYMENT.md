@@ -11,18 +11,13 @@ This project is ready for deployment on Netlify (frontend) and Render (backend).
 
 ## Step 1: Deploy Backend on Render
 
-### 1.1 Set up MongoDB Atlas
-1. Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Create a free cluster
-3. Create a database user with username and password
-4. Whitelist IP addresses (use 0.0.0.0/0 for all IPs)
-5. Get your connection string: `mongodb+srv://<username>:<password>@cluster.mongodb.net/video-conference-app`
+You have two options for deploying the backend on Render:
 
-### 1.2 Deploy Backend
+### Option A: Deploy from GitHub (Recommended)
 1. Go to [Render](https://render.com)
 2. Click "New +" → "Web Service"
 3. Connect your Git repository
-4. Select the `node_backend` folder as root directory
+4. Set **Root Directory** to `node_backend`
 5. Configure:
    - **Name**: videocon-backend
    - **Runtime**: Node
@@ -35,6 +30,22 @@ This project is ready for deployment on Netlify (frontend) and Render (backend).
 7. Click "Deploy Web Service"
 8. Wait for deployment to complete
 9. Copy your backend URL (e.g., `https://videocon-backend.onrender.com`)
+
+### Option B: Deploy from Docker Image
+See `node_backend/DOCKER_DEPLOYMENT.md` for detailed instructions.
+
+Quick summary:
+1. Build Docker image: `docker build -t your-username/videocon-backend:latest .`
+2. Push to Docker Hub: `docker push your-username/videocon-backend:latest`
+3. On Render, select "Existing Image" and enter: `docker.io/your-username/videocon-backend:latest`
+4. Set environment variables and deploy
+
+## Step 1.1: Set up MongoDB Atlas (Required for both options)
+1. Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+2. Create a free cluster
+3. Create a database user with username and password
+4. Whitelist IP addresses (use 0.0.0.0/0 for all IPs)
+5. Get your connection string: `mongodb+srv://<username>:<password>@cluster.mongodb.net/video-conference-app`
 
 ## Step 2: Deploy Frontend on Netlify
 

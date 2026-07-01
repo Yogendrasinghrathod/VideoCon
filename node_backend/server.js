@@ -25,16 +25,19 @@ const server = http.createServer(app);
 // Register the socket server
 socketServer.registerSocketServer(server);
 
-// Connect to MongoDB and start the server
+// Start the server immediately
+server.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
+
+// Connect to MongoDB (async, doesn't block server start)
 mongoose
   .connect(MONGO_URI)
   .then(() => {
-    server.listen(PORT, () => {
-      console.log(`Server is listening on port ${PORT}`);
-    });
+    console.log("Connected to MongoDB successfully");
   })
   .catch((err) => {
-    console.error("Database connection failed. Server not started:", err);
+    console.error("Database connection failed:", err);
   });
 
 // Handle unhandled promise rejections
